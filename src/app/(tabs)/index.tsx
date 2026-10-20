@@ -1,19 +1,48 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
+import { useState } from "react";
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { books } from "@/data/books";
-import type { Book } from "@/types/book";
+import { LEVELS } from "@/data/levels";
+import type { Book, Level } from "@/types/book";
 
 export default function BooksScreen() {
+  const [selectedLevel, setSelectedLevel] = useState<Level | null>(null);
+
+  const visibleBooks =
+    selectedLevel === null
+      ? books
+      : books.filter((book) => book.level === selectedLevel);
+
   return (
-    <FlatList
-      data={books}
-      keyExtractor={(book) => book.id}
-      renderItem={({ item }) => <BookRow book={item} />}
-      ItemSeparatorComponent={Separator}
-      contentContainerStyle={styles.content}
-    />
+    <View style={styles.screen}>
+      <View style={styles.chips}>
+        <LevelChip
+          label="Tümü"
+          selected={selectedLevel === null}
+          onPress={() => setSelectedLevel(null)}
+        />
+        {LEVELS.map((level) => (
+          <LevelChip
+            key={level}
+            label={level}
+            selected={selectedLevel === level}
+            onPress={() => setSelectedLevel(level)}
+          />
+        ))}
+      </View>
+      <FlatList
+        data={visibleBooks}
+        keyExtractor={(book) => book.id}
+        renderItem={({ item }) => <BookRow book={item} />}
+        ItemSeparatorComponent={Separator}
+        contentContainerStyle={styles.content}
+        ListEmptyComponent={
+          <Text style={styles.empty}>Bu seviyede kitap bulunamadı.</Text>
+        }
+      />
+    </View>
   );
 }
 
@@ -40,6 +69,29 @@ function BookRow({ book }: { book: Book }) {
 
 function Separator() {
   return <View style={styles.separator} />;
+}
+
+type LevelChipProps = {
+  label: string;
+  selected: boolean;
+  onPress: () => void;
+};
+
+function LevelChip({ label, selected, onPress }: LevelChipProps) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.chip,
+        selected && styles.chipSelected,
+        pressed && styles.chipPressed,
+      ]}
+    >
+      <Text style={[styles.chipText, selected && styles.chipTextSelected]}>
+        {label}
+      </Text>
+    </Pressable>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -80,5 +132,39 @@ const styles = StyleSheet.create({
   author: {
     fontSize: 14,
     color: "#666",
+  },
+  chip: {
+    backgroundColor: "#eee",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+  },
+  chipSelected: {
+    backgroundColor: "#2563eb",
+  },
+  chipPressed: {
+    opacity: 0.7,
+  },
+  chipText: {
+    color: "#000",
+    fontWeight: "bold",
+  },
+  chipTextSelected: {
+    color: "#fff",
+  },
+  screen: {
+    flex: 1,
+  },
+  chips: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+  },
+  empty: {
+    textAlign: "center",
+    color: "#666",
+    marginTop: 32,
   },
 });

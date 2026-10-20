@@ -110,6 +110,8 @@ _Öğrenilecekler:_ algoritma kurma, tarih hesapları, durum yönetimi.
 - [ ] Boş ekranlar ve hata durumları
 - [ ] Kitap sayısını 6–10'a çıkar
 - [ ] Gizlilik politikası sayfası (GitHub Pages yeterli)
+- [ ] Kitap metinlerinin Türkiye'deki telif durumunu kontrol et (Gutenberg sadece ABD için "kamu malı" diyor)
+- [ ] Kullanılan açık kaynak paketlerin lisanslarını Hakkında ekranında listele
 
 ### Faz 6: Yayın
 

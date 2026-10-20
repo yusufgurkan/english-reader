@@ -69,6 +69,8 @@ npx tsc --noEmit
 
 ```
 src/app/    Ekranlar (Expo Router): (tabs)/ ve book/[id]
+src/data/   Kitap verileri (books/)
+src/types/  Ortak tipler (Book)
 assets/     İkon ve açılış görselleri
 docs/       Yol haritası
 ```
@@ -79,4 +81,6 @@ Her faz ayrı bir branch'te geliştirilir (`faz-1-okuyucu` gibi), faz bitince Pu
 
 ## Lisans
 
-MIT, ayrıntılar için [LICENSE](LICENSE).
+Tüm hakları saklıdır © 2026 Yusuf Gürkan. Kodun hiçbir bölümü izin alınmadan kopyalanamaz, değiştirilemez, dağıtılamaz veya kullanılamaz. Ayrıntılar: [LICENSE](LICENSE).
+
+Kullanılan açık kaynak paketler ve kitap metinleri kendi lisanslarına tabidir: [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).

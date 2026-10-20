@@ -64,7 +64,7 @@ _Öğrenilenler:_ dosya tabanlı yönlendirme, layout'lar, dinamik route.
 - [x] `Book` tipi: id, başlık, yazar, seviye, kaynak, lisans, paragraflara bölünmüş bölümler
 - [x] İlk örnek kitap (`fox-and-grapes`)
 - [x] İkinci kitabı ekle, Kitaplar ekranı gerçek kitapları göstersin (başlık, yazar, seviye rozeti)
-- [ ] Seviyeye göre filtre
+- [x] Seviyeye göre filtre
 - [ ] Okuyucu: metni paragraf paragraf `FlatList` ile göster
 - [ ] Kelimeler dokunulabilir olsun (iç içe `<Text onPress>`), seçilen kelime vurgulansın
 - [ ] Alttan açılan kelime paneli

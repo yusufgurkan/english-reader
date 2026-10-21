@@ -1,5 +1,5 @@
 import { Stack, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 
 import { getBookById } from "@/data/books";
@@ -10,9 +10,18 @@ type Selection = {
   tokenIndex: number;
 };
 
+type WordPressHandler = (paragraphIndex: number, tokenIndex: number) => void;
+
 export default function ReaderScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [selection, setSelection] = useState<Selection | null>(null);
+  // useCallback: fonksiyon her çizimde aynı kalır; böylece memo'lu
+  // Paragraph ve Word bileşenleri onu "değişti" sanıp yeniden çizilmez.
+  const handleWordPress = useCallback(
+    (paragraphIndex: number, tokenIndex: number) =>
+      setSelection({ paragraphIndex, tokenIndex }),
+    [],
+  );
   const book = getBookById(id);
 
   if (!book) {
@@ -35,14 +44,13 @@ export default function ReaderScreen() {
         renderItem={({ item, index }) => (
           <Paragraph
             text={item}
+            paragraphIndex={index}
             selectedToken={
               selection !== null && selection.paragraphIndex === index
                 ? selection.tokenIndex
                 : null
             }
-            onWordPress={(tokenIndex) =>
-              setSelection({ paragraphIndex: index, tokenIndex })
-            }
+            onWordPress={handleWordPress}
           />
         )}
         contentContainerStyle={styles.content}
@@ -53,31 +61,66 @@ export default function ReaderScreen() {
 
 type ParagraphProps = {
   text: string;
+  paragraphIndex: number;
   selectedToken: number | null;
-  onWordPress: (tokenIndex: number) => void;
+  onWordPress: WordPressHandler;
 };
 
-function Paragraph({ text, selectedToken, onWordPress }: ParagraphProps) {
+// memo: prop'ları değişmeyen paragraf yeniden çizilmez
+const Paragraph = memo(function Paragraph({
+  text,
+  paragraphIndex,
+  selectedToken,
+  onWordPress,
+}: ParagraphProps) {
   const tokens = tokenize(text);
 
   return (
     <Text style={styles.paragraph}>
       {tokens.map((token, tokenIndex) =>
         token.isWord ? (
-          <Text
+          <Word
             key={tokenIndex}
-            onPress={() => onWordPress(tokenIndex)}
-            style={tokenIndex === selectedToken && styles.selectedWord}
-          >
-            {token.text}
-          </Text>
+            text={token.text}
+            paragraphIndex={paragraphIndex}
+            tokenIndex={tokenIndex}
+            selected={tokenIndex === selectedToken}
+            onPress={onWordPress}
+          />
         ) : (
-          <Text key={tokenIndex}>{token.text}</Text>
+          // Boşluk ve noktalama dokunulamaz; ayrı bir Text'e gerek yok
+          token.text
         ),
       )}
     </Text>
   );
-}
+});
+
+type WordProps = {
+  text: string;
+  paragraphIndex: number;
+  tokenIndex: number;
+  selected: boolean;
+  onPress: WordPressHandler;
+};
+
+// memo: bir dokunuşta sadece seçimi değişen 2 kelime yeniden çizilir
+const Word = memo(function Word({
+  text,
+  paragraphIndex,
+  tokenIndex,
+  selected,
+  onPress,
+}: WordProps) {
+  return (
+    <Text
+      onPress={() => onPress(paragraphIndex, tokenIndex)}
+      style={selected && styles.selectedWord}
+    >
+      {text}
+    </Text>
+  );
+});
 
 const styles = StyleSheet.create({
   container: {

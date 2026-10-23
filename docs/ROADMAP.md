@@ -67,7 +67,7 @@ _Öğrenilenler:_ dosya tabanlı yönlendirme, layout'lar, dinamik route.
 - [x] Seviyeye göre filtre
 - [x] Okuyucu: metni paragraf paragraf `FlatList` ile göster
 - [x] Kelimeler dokunulabilir olsun (iç içe `<Text onPress>`), seçilen kelime vurgulansın
-- [ ] Eski telefonda dokunma gecikmesini üretim modunda ölç (`npx expo start --no-dev --minify`), gerekirse hızlandır
+- [x] Eski telefonda dokunma gecikmesini üretim modunda ölç (`npx expo start --no-dev --minify`), gerekirse hızlandır
 - [ ] Alttan açılan kelime paneli
 - [ ] Son okunan yeri hatırla
 

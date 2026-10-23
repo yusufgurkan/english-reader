@@ -4,8 +4,8 @@
 <sub>A reading-first English vocabulary app built with Expo and React Native. Early stage, Android first.</sub>
 
 ![Durum](https://img.shields.io/badge/durum-geliştiriliyor-orange)
-![Expo](https://img.shields.io/badge/Expo-SDK%2057-000020?logo=expo&logoColor=white)
-![React Native](https://img.shields.io/badge/React%20Native-0.86-61DAFB?logo=react&logoColor=black)
+![Expo](https://img.shields.io/badge/Expo-SDK%2058-000020?logo=expo&logoColor=white)
+![React Native](https://img.shields.io/badge/React%20Native-0.88-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 
 ## Neden bu uygulama?
@@ -40,7 +40,7 @@ Uygulamada şu an Kitaplar, Kelimelerim ve Test sekmeleri var. Okuyucu, sözlük
 
 ## Teknoloji
 
-- Expo SDK 57, React Native 0.86, React 19
+- Expo SDK 58, React Native 0.88, React 19.3
 - Expo Router: dosya tabanlı yönlendirme, tipli rotalar
 - TypeScript ve ESLint
 - AsyncStorage (şimdilik geçici). Planlanan: `expo-sqlite`, `expo-speech`

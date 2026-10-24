@@ -1,8 +1,17 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
+import * as Speech from "expo-speech";
+import { useEffect } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import type { DictionaryEntry, DictionarySense } from "@/types/dictionary";
+
+// Telefonun kendi seslendirme motoruyla İngilizce okur. Önceki seslendirme
+// durdurulur; yoksa sesler arka arkaya sıraya girer.
+function speak(text: string, rate: number) {
+  void Speech.stop();
+  Speech.speak(text, { language: "en-US", rate });
+}
 
 type WordPanelProps = {
   word: string;
@@ -14,6 +23,12 @@ type WordPanelProps = {
 export function WordPanel({ word, sentence, entry, onClose }: WordPanelProps) {
   // Alttaki sistem çubuğunun yüksekliği; panel onun altında kalmasın
   const insets = useSafeAreaInsets();
+  // Panel kapanınca konuşma da sussun
+  useEffect(() => {
+    return () => {
+      void Speech.stop();
+    };
+  }, []);
   // "Hansel" gibi büyük harfle geçen kelimede özel isim anlamları da gösterilir
   const isCapitalized = word[0] !== word[0].toLowerCase();
   const names = isCapitalized ? (entry?.names ?? []) : [];
@@ -24,7 +39,17 @@ export function WordPanel({ word, sentence, entry, onClose }: WordPanelProps) {
   return (
     <View style={[styles.panel, { paddingBottom: 16 + insets.bottom }]}>
       <View style={styles.header}>
-        <Text style={styles.word}>{word}</Text>
+        <View style={styles.wordRow}>
+          <Text style={styles.word}>{word}</Text>
+          <Pressable
+            onPress={() => speak(word, 0.9)}
+            hitSlop={12}
+            accessibilityRole="button"
+            accessibilityLabel="Kelimeyi seslendir"
+          >
+            <Ionicons name="volume-high-outline" size={24} color="#2563eb" />
+          </Pressable>
+        </View>
         <Pressable
           onPress={onClose}
           hitSlop={12}
@@ -54,7 +79,17 @@ export function WordPanel({ word, sentence, entry, onClose }: WordPanelProps) {
         {!hasMeaning && (
           <Text style={styles.hint}>Bu kelime henüz sözlükte yok.</Text>
         )}
-        <Text style={styles.sentence}>{sentence}</Text>
+        <View style={styles.sentenceRow}>
+          <Text style={styles.sentence}>{sentence}</Text>
+          <Pressable
+            onPress={() => speak(sentence, 0.8)}
+            hitSlop={12}
+            accessibilityRole="button"
+            accessibilityLabel="Cümleyi seslendir"
+          >
+            <Ionicons name="volume-medium-outline" size={20} color="#2563eb" />
+          </Pressable>
+        </View>
       </ScrollView>
     </View>
   );
@@ -94,6 +129,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
+  wordRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
   word: {
     fontSize: 24,
     fontWeight: "bold",
@@ -122,12 +162,18 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#666",
   },
+  sentenceRow: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 8,
+    marginTop: 4,
+  },
   sentence: {
+    flex: 1,
     fontSize: 15,
     lineHeight: 22,
     color: "#666",
     fontStyle: "italic",
-    marginTop: 4,
   },
   hint: {
     fontSize: 14,

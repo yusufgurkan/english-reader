@@ -80,7 +80,7 @@ _Bitti sayılır:_ kitap seçip okuyabiliyorum, dokunduğum kelime panelde gör�
 - [x] `scripts/build-dictionary.ts`: kitaplardaki kelimeleri toplar, köklerini bulur ("ran" → "run", "children" → "child"), Türkçe anlamlarını çeker ve `src/data/dictionary.json` dosyasını yazar (birkaç yüz KB; telefona sadece bu gider)
 - [x] Akıllı sözlük: çekim bilgisi ("run fiilinin geçmiş zamanı"), özel isim filtresi (küçük harfle geçen kelimede "soyadı" gibi anlamlar gösterilmez), anlamlar türe göre gruplu
 - [ ] Panelde anlam ve kelime türü göster (kod hazır, telefonda denenecek)
-- [ ] `expo-speech` ile telaffuz ekle
+- [ ] `expo-speech` ile telaffuz ekle (kod hazır, telefonda denenecek)
 - [x] Sözlük lisansı: `THIRD-PARTY-NOTICES.md`'de atıf (Hakkında ekranı ayrı madde) (sözlük verisi CC BY-SA kalır, uygulamanın kodu bizim)
 - [ ] Hakkında ekranı: kitap ve sözlük kaynakları
 

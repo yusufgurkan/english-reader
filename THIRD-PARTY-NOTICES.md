@@ -37,3 +37,15 @@ Uygulama Expo, React Native, React ve başka açık kaynak paketleri kullanır. 
 ## Kitap metinleri
 
 `src/data/books/` içindeki metinler Project Gutenberg'den alınmıştır; Gutenberg'e göre ABD'de kamu malıdır (public domain). Her kitabın kaynak linki kendi dosyasında yazılıdır.
+
+## Sözlük verisi
+
+`src/data/dictionary.json`, Vikisözlük (Wiktionary) içeriğinden üretilmiştir:
+
+- Türkçe Vikisözlük: https://tr.wiktionary.org
+- İngilizce Vikisözlük: https://en.wiktionary.org
+- Veriler kaikki.org'un Wiktextract çıktısından alındı: https://kaikki.org (Tatu Ylonen, "Wiktextract: Wiktionary as Machine-Readable Structured Data", LREC 2022)
+
+Bu içerik Creative Commons Atıf-AynıLisanslaPaylaş (CC BY-SA) lisansıyla kullanılmaktadır: https://creativecommons.org/licenses/by-sa/4.0/deed.tr
+
+Vikisözlük verisinden üretilen `src/data/dictionary.json` dosyası da aynı lisansa (CC BY-SA) tabidir; dosyayı üretirken anlamları süzdük, kısalttık ve birleştirdik. Bu lisans yalnızca sözlük verisini kapsar; uygulamanın kodu [LICENSE](LICENSE) dosyasındaki koşullara tabidir. Dosyada ayrıca bizim yazdığımız birkaç açıklama bulunur (`scripts/build-dictionary.ts` içindeki `MANUAL_ENTRIES`).

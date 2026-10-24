@@ -77,10 +77,11 @@ _Bitti sayılır:_ kitap seçip okuyabiliyorum, dokunduğum kelime panelde gör�
 ### Faz 2: İnternetsiz sözlük
 
 - [x] Sözlük kaynağını seç ve lisansını doğrula: Türkçe Vikisözlük (İngilizce kelimelerin Türkçe anlamları) + İngilizce Vikisözlük (Türkçe çeviriler ve çekim bilgisi), ikisi de kaikki.org üzerinden, CC BY-SA. Ham veri `data-raw/` klasöründe, git dışında
-- [ ] `scripts/build-dictionary.ts`: kitaplardaki kelimeleri toplar, köklerini bulur ("ran" → "run", "children" → "child"), Türkçe anlamlarını çeker ve `src/data/dictionary.json` dosyasını yazar (birkaç yüz KB; telefona sadece bu gider)
-- [ ] Akıllı sözlük: çekim bilgisi ("run fiilinin geçmiş zamanı"), özel isim filtresi (küçük harfle geçen kelimede "soyadı" gibi anlamlar gösterilmez), anlamlar türe göre gruplu
-- [ ] Panelde anlam ve kelime türü göster, `expo-speech` ile telaffuz ekle
-- [ ] Sözlük lisansı: `THIRD-PARTY-NOTICES.md` ve Hakkında ekranında atıf (sözlük verisi CC BY-SA kalır, uygulamanın kodu bizim)
+- [x] `scripts/build-dictionary.ts`: kitaplardaki kelimeleri toplar, köklerini bulur ("ran" → "run", "children" → "child"), Türkçe anlamlarını çeker ve `src/data/dictionary.json` dosyasını yazar (birkaç yüz KB; telefona sadece bu gider)
+- [x] Akıllı sözlük: çekim bilgisi ("run fiilinin geçmiş zamanı"), özel isim filtresi (küçük harfle geçen kelimede "soyadı" gibi anlamlar gösterilmez), anlamlar türe göre gruplu
+- [ ] Panelde anlam ve kelime türü göster (kod hazır, telefonda denenecek)
+- [ ] `expo-speech` ile telaffuz ekle
+- [x] Sözlük lisansı: `THIRD-PARTY-NOTICES.md`'de atıf (Hakkında ekranı ayrı madde) (sözlük verisi CC BY-SA kalır, uygulamanın kodu bizim)
 - [ ] Hakkında ekranı: kitap ve sözlük kaynakları
 
 _Öğrenilecekler:_ Node script yazma, veri işleme, lisanslar.

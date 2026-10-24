@@ -10,12 +10,14 @@ import {
 
 import { WordPanel } from "@/components/WordPanel";
 import { getBookById } from "@/data/books";
+import { lookupWord } from "@/lib/dictionary";
 import {
   loadReadingPosition,
   saveReadingPosition,
 } from "@/lib/readingPosition";
 import { getSentence } from "@/lib/sentence";
 import { tokenize } from "@/lib/tokenize";
+import type { DictionaryEntry } from "@/types/dictionary";
 
 // Ekranın en az yarısını kaplayan paragraf "okunuyor" sayılır. Paragrafın
 // kendi yüzdesine bakmıyoruz: ekrandan uzun paragraflar hiç sayılmazdı.
@@ -93,12 +95,17 @@ export default function ReaderScreen() {
   }
 
   // Seçili kelimenin kendisi ve geçtiği cümle (seçim yoksa null)
-  let selectedWord: { word: string; sentence: string } | null = null;
+  let selectedWord: {
+    word: string;
+    sentence: string;
+    entry: DictionaryEntry | undefined;
+  } | null = null;
   if (selection !== null) {
     const tokens = tokenize(paragraphs[selection.paragraphIndex]);
     selectedWord = {
       word: tokens[selection.tokenIndex].text,
       sentence: getSentence(tokens, selection.tokenIndex),
+      entry: lookupWord(tokens[selection.tokenIndex].text),
     };
   }
 
@@ -134,6 +141,7 @@ export default function ReaderScreen() {
         <WordPanel
           word={selectedWord.word}
           sentence={selectedWord.sentence}
+          entry={selectedWord.entry}
           onClose={handleClosePanel}
         />
       )}

@@ -1,16 +1,25 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import type { DictionaryEntry, DictionarySense } from "@/types/dictionary";
 
 type WordPanelProps = {
   word: string;
   sentence: string;
+  entry: DictionaryEntry | undefined;
   onClose: () => void;
 };
 
-export function WordPanel({ word, sentence, onClose }: WordPanelProps) {
+export function WordPanel({ word, sentence, entry, onClose }: WordPanelProps) {
   // Alttaki sistem çubuğunun yüksekliği; panel onun altında kalmasın
   const insets = useSafeAreaInsets();
+  // "Hansel" gibi büyük harfle geçen kelimede özel isim anlamları da gösterilir
+  const isCapitalized = word[0] !== word[0].toLowerCase();
+  const names = isCapitalized ? (entry?.names ?? []) : [];
+  const hasMeaning =
+    entry !== undefined &&
+    (entry.forms.length > 0 || entry.senses.length > 0 || names.length > 0);
 
   return (
     <View style={[styles.panel, { paddingBottom: 16 + insets.bottom }]}>
@@ -25,10 +34,39 @@ export function WordPanel({ word, sentence, onClose }: WordPanelProps) {
           <Ionicons name="close" size={24} color="#666" />
         </Pressable>
       </View>
-      <Text style={styles.sentence}>{sentence}</Text>
-      <Text style={styles.hint}>Türkçe anlamı yakında burada olacak.</Text>
+
+      <ScrollView style={styles.body} contentContainerStyle={styles.bodyContent}>
+        {entry?.forms.map((form) => (
+          <View key={`${form.lemma}-${form.label}`} style={styles.group}>
+            <Text style={styles.formTitle}>
+              {form.lemma} · {form.label}
+            </Text>
+            <SenseList senses={form.senses} />
+          </View>
+        ))}
+        {entry !== undefined && <SenseList senses={entry.senses} />}
+        {names.length > 0 && (
+          <Text style={styles.sense}>
+            <Text style={styles.pos}>özel isim: </Text>
+            {names.join("; ")}
+          </Text>
+        )}
+        {!hasMeaning && (
+          <Text style={styles.hint}>Bu kelime henüz sözlükte yok.</Text>
+        )}
+        <Text style={styles.sentence}>{sentence}</Text>
+      </ScrollView>
     </View>
   );
+}
+
+function SenseList({ senses }: { senses: DictionarySense[] }) {
+  return senses.map((sense) => (
+    <Text key={sense.pos} style={styles.sense}>
+      <Text style={styles.pos}>{sense.pos}: </Text>
+      {sense.meanings.join(", ")}
+    </Text>
+  ));
 }
 
 const styles = StyleSheet.create({
@@ -60,14 +98,39 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
   },
-  sentence: {
+  // Anlamlar çok uzunsa panel ekranı kaplamasın, içi kaydırılsın
+  body: {
+    maxHeight: 260,
+  },
+  bodyContent: {
+    gap: 8,
+  },
+  group: {
+    gap: 4,
+  },
+  formTitle: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#2563eb",
+  },
+  sense: {
     fontSize: 16,
     lineHeight: 24,
-    color: "#444",
+    color: "#222",
+  },
+  pos: {
+    fontWeight: "600",
+    color: "#666",
+  },
+  sentence: {
+    fontSize: 15,
+    lineHeight: 22,
+    color: "#666",
     fontStyle: "italic",
+    marginTop: 4,
   },
   hint: {
-    fontSize: 13,
+    fontSize: 14,
     color: "#999",
   },
 });

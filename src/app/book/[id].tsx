@@ -1,11 +1,25 @@
 import { Stack, useLocalSearchParams } from "expo-router";
-import { memo, useCallback, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  type ListViewToken,
+} from "react-native";
 
 import { WordPanel } from "@/components/WordPanel";
 import { getBookById } from "@/data/books";
+import {
+  loadReadingPosition,
+  saveReadingPosition,
+} from "@/lib/readingPosition";
 import { getSentence } from "@/lib/sentence";
 import { tokenize } from "@/lib/tokenize";
+
+// Ekranın en az yarısını kaplayan paragraf "okunuyor" sayılır. Paragrafın
+// kendi yüzdesine bakmıyoruz: ekrandan uzun paragraflar hiç sayılmazdı.
+const VIEWABILITY_CONFIG = { viewAreaCoveragePercentThreshold: 50 };
 
 type Selection = {
   paragraphIndex: number;
@@ -25,7 +39,50 @@ export default function ReaderScreen() {
     [],
   );
   const handleClosePanel = useCallback(() => setSelection(null), []);
+  const listRef = useRef<FlatList<string>>(null);
   const book = getBookById(id);
+  const paragraphs = book
+    ? book.chapters.flatMap((chapter) => chapter.paragraphs)
+    : [];
+
+  // Kitap açılınca kaldığı paragrafa git
+  useEffect(() => {
+    let cancelled = false;
+    loadReadingPosition(id).then((index) => {
+      if (cancelled || index === 0 || index >= paragraphs.length) return;
+      listRef.current?.scrollToIndex({ index, animated: false });
+    });
+    // Ekran bu sırada kapanırsa kaydırmaya çalışma
+    return () => {
+      cancelled = true;
+    };
+  }, [id, paragraphs.length]);
+
+  // Okurken ekrandaki ilk paragrafı kaydet
+  const handleViewableItemsChanged = useCallback(
+    ({ viewableItems }: { viewableItems: ListViewToken[] }) => {
+      const first = viewableItems[0];
+      if (first && typeof first.index === "number") {
+        void saveReadingPosition(id, first.index);
+      }
+    },
+    [id],
+  );
+
+  // Hedef paragraf henüz çizilmediyse scrollToIndex başarısız olur:
+  // önce tahmini konuma kaydır, paragraf çizilince tekrar dene
+  const handleScrollToIndexFailed = useCallback(
+    (info: { index: number; averageItemLength: number }) => {
+      listRef.current?.scrollToOffset({
+        offset: info.averageItemLength * info.index,
+        animated: false,
+      });
+      setTimeout(() => {
+        listRef.current?.scrollToIndex({ index: info.index, animated: false });
+      }, 100);
+    },
+    [],
+  );
 
   if (!book) {
     return (
@@ -34,8 +91,6 @@ export default function ReaderScreen() {
       </View>
     );
   }
-
-  const paragraphs = book.chapters.flatMap((chapter) => chapter.paragraphs);
 
   // Seçili kelimenin kendisi ve geçtiği cümle (seçim yoksa null)
   let selectedWord: { word: string; sentence: string } | null = null;
@@ -51,9 +106,13 @@ export default function ReaderScreen() {
     <View style={styles.screen}>
       <Stack.Screen options={{ title: book.title }} />
       <FlatList
+        ref={listRef}
         data={paragraphs}
         keyExtractor={(_, index) => String(index)}
         extraData={selection}
+        onViewableItemsChanged={handleViewableItemsChanged}
+        viewabilityConfig={VIEWABILITY_CONFIG}
+        onScrollToIndexFailed={handleScrollToIndexFailed}
         renderItem={({ item, index }) => (
           <Paragraph
             text={item}

@@ -82,7 +82,7 @@ _Bitti sayılır:_ kitap seçip okuyabiliyorum, dokunduğum kelime panelde gör�
 - [ ] Panelde anlam ve kelime türü göster (kod hazır, telefonda denenecek)
 - [ ] `expo-speech` ile telaffuz ekle (kod hazır, telefonda denenecek)
 - [x] Sözlük lisansı: `THIRD-PARTY-NOTICES.md`'de atıf (Hakkında ekranı ayrı madde) (sözlük verisi CC BY-SA kalır, uygulamanın kodu bizim)
-- [ ] Hakkında ekranı: kitap ve sözlük kaynakları
+- [ ] Hakkında ekranı: kitap ve sözlük kaynakları (kod hazır, telefonda denenecek)
 
 _Öğrenilecekler:_ Node script yazma, veri işleme, lisanslar.
 _Bitti sayılır:_ örnek kitaplardaki kelimelerin büyük çoğunluğu çevriliyor.

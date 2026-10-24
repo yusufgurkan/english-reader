@@ -130,6 +130,8 @@ _Öğrenilecekler:_ build, imzalama, mağaza süreci.
 - Kullanıcının kendi `.txt` veya `.epub` dosyasını eklemesi
 - Gutenberg'den kitap indirme
 - AI ile cümle çevirisi (ücretli olabilecek kısım)
+- Kısaltılmış kitaplar: uzun klasiklerin tamamı yerine kısa sürümleri. Piyasadaki graded reader'lar telifli; kaynak olarak telifi bitmiş "çocuklar için yeniden anlatılmış" baskılar, seçilmiş bölümler ya da kendi kısaltmalarımız (AI destekli olabilir)
+- Kitap gibi okuma: ekrana sığmayan metinde sağa kaydırarak ya da düğmeyle sonraki sayfaya geçmek. Metni ekrana göre sayfalara bölmek zor (yazının kapladığı alanı ölçmek gerekiyor); kolay ara yol, bölüm bölüm ilerleme
 - iOS
 
 ## Çalışma şekli

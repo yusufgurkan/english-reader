@@ -2,7 +2,9 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { memo, useCallback, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 
+import { WordPanel } from "@/components/WordPanel";
 import { getBookById } from "@/data/books";
+import { getSentence } from "@/lib/sentence";
 import { tokenize } from "@/lib/tokenize";
 
 type Selection = {
@@ -22,6 +24,7 @@ export default function ReaderScreen() {
       setSelection({ paragraphIndex, tokenIndex }),
     [],
   );
+  const handleClosePanel = useCallback(() => setSelection(null), []);
   const book = getBookById(id);
 
   if (!book) {
@@ -34,8 +37,18 @@ export default function ReaderScreen() {
 
   const paragraphs = book.chapters.flatMap((chapter) => chapter.paragraphs);
 
+  // Seçili kelimenin kendisi ve geçtiği cümle (seçim yoksa null)
+  let selectedWord: { word: string; sentence: string } | null = null;
+  if (selection !== null) {
+    const tokens = tokenize(paragraphs[selection.paragraphIndex]);
+    selectedWord = {
+      word: tokens[selection.tokenIndex].text,
+      sentence: getSentence(tokens, selection.tokenIndex),
+    };
+  }
+
   return (
-    <>
+    <View style={styles.screen}>
       <Stack.Screen options={{ title: book.title }} />
       <FlatList
         data={paragraphs}
@@ -53,9 +66,19 @@ export default function ReaderScreen() {
             onWordPress={handleWordPress}
           />
         )}
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[
+          styles.content,
+          selectedWord !== null && styles.contentWithPanel,
+        ]}
       />
-    </>
+      {selectedWord !== null && (
+        <WordPanel
+          word={selectedWord.word}
+          sentence={selectedWord.sentence}
+          onClose={handleClosePanel}
+        />
+      )}
+    </View>
   );
 }
 
@@ -128,8 +151,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  screen: {
+    flex: 1,
+  },
   content: {
     padding: 20,
+  },
+  // Panel açıkken metnin sonu panelin altında kalmasın
+  contentWithPanel: {
+    paddingBottom: 240,
   },
   paragraph: {
     fontSize: 18,

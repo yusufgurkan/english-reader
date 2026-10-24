@@ -44,7 +44,7 @@ Her kitabın lisansı eklenmeden önce tek tek kontrol edilir.
 | B1     | Grimm ve Andersen masallarının eski İngilizce çevirileri (Gutenberg) | Kamu malı |
 | B1     | Simple English Wikipedia                                             | CC BY-SA  |
 | B2+    | Kısa öyküler: Sherlock Holmes, O. Henry (Gutenberg)                  | Kamu malı |
-| Sözlük | Wiktionary verisi (kaikki.org), ilk aday                             | CC BY-SA  |
+| Sözlük | Türkçe ve İngilizce Vikisözlük verisi (kaikki.org), seçildi          | CC BY-SA  |
 
 ## Fazlar
 
@@ -76,9 +76,11 @@ _Bitti sayılır:_ kitap seçip okuyabiliyorum, dokunduğum kelime panelde gör�
 
 ### Faz 2: İnternetsiz sözlük
 
-- [ ] `scripts/build-dictionary.ts`: kitaplardaki kelimeleri toplar, köklerini bulur ("running" → "run"), Türkçe karşılıklarını çeker ve `src/data/dictionary.json` dosyasını yazar
-- [ ] Sözlük kaynağını seç ve lisansını doğrula
+- [x] Sözlük kaynağını seç ve lisansını doğrula: Türkçe Vikisözlük (İngilizce kelimelerin Türkçe anlamları) + İngilizce Vikisözlük (Türkçe çeviriler ve çekim bilgisi), ikisi de kaikki.org üzerinden, CC BY-SA. Ham veri `data-raw/` klasöründe, git dışında
+- [ ] `scripts/build-dictionary.ts`: kitaplardaki kelimeleri toplar, köklerini bulur ("ran" → "run", "children" → "child"), Türkçe anlamlarını çeker ve `src/data/dictionary.json` dosyasını yazar (birkaç yüz KB; telefona sadece bu gider)
+- [ ] Akıllı sözlük: çekim bilgisi ("run fiilinin geçmiş zamanı"), özel isim filtresi (küçük harfle geçen kelimede "soyadı" gibi anlamlar gösterilmez), anlamlar türe göre gruplu
 - [ ] Panelde anlam ve kelime türü göster, `expo-speech` ile telaffuz ekle
+- [ ] Sözlük lisansı: `THIRD-PARTY-NOTICES.md` ve Hakkında ekranında atıf (sözlük verisi CC BY-SA kalır, uygulamanın kodu bizim)
 - [ ] Hakkında ekranı: kitap ve sözlük kaynakları
 
 _Öğrenilecekler:_ Node script yazma, veri işleme, lisanslar.
@@ -129,7 +131,8 @@ _Öğrenilecekler:_ build, imzalama, mağaza süreci.
 - MEB İngilizce kitaplarından sınıf ve ünite bazlı kelime listeleri (telif durumu kontrol edilecek)
 - Kullanıcının kendi `.txt` veya `.epub` dosyasını eklemesi
 - Gutenberg'den kitap indirme
-- AI ile cümle çevirisi (ücretli olabilecek kısım)
+- Cümle çevirisi (bağlama ve zamana göre): paneldeki cümleye "Cümleyi çevir" düğmesi. İki yol: telefonda çalışan çeviri modeli (ücretsiz, internetsiz, ama development build gerekir) ya da AI (en kaliteli; backend gerekir, ücretli olabilecek kısım)
+- Bağlama göre kelime anlamı: AI'a "bu cümlede bu kelime ne demek?" diye sormak (cümle çevirisinin üstüne eklenir)
 - Kısaltılmış kitaplar: uzun klasiklerin tamamı yerine kısa sürümleri. Piyasadaki graded reader'lar telifli; kaynak olarak telifi bitmiş "çocuklar için yeniden anlatılmış" baskılar, seçilmiş bölümler ya da kendi kısaltmalarımız (AI destekli olabilir)
 - Kitap gibi okuma: ekrana sığmayan metinde sağa kaydırarak ya da düğmeyle sonraki sayfaya geçmek. Metni ekrana göre sayfalara bölmek zor (yazının kapladığı alanı ölçmek gerekiyor); kolay ara yol, bölüm bölüm ilerleme
 - iOS

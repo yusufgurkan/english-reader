@@ -61,11 +61,14 @@ _Öğrenilenler:_ dosya tabanlı yönlendirme, layout'lar, dinamik route.
 
 ### Faz 1: Kütüphane ve okuyucu
 
-- [ ] `Book` tipi: id, başlık, yazar, seviye, kaynak, lisans, paragraflara bölünmüş bölümler
-- [ ] 2–3 örnek kitap ekle
-- [ ] Kitaplar ekranı: seviye rozetleri ve seviyeye göre filtre
-- [ ] Okuyucu: metni paragraf paragraf `FlatList` ile göster, kelimeleri iç içe `<Text onPress>` olarak yaz
-- [ ] Dokunulan kelime vurgulanır ve alttan bir panel açılır
+- [x] `Book` tipi: id, başlık, yazar, seviye, kaynak, lisans, paragraflara bölünmüş bölümler
+- [x] İlk örnek kitap (`fox-and-grapes`)
+- [x] İkinci kitabı ekle, Kitaplar ekranı gerçek kitapları göstersin (başlık, yazar, seviye rozeti)
+- [x] Seviyeye göre filtre
+- [x] Okuyucu: metni paragraf paragraf `FlatList` ile göster
+- [x] Kelimeler dokunulabilir olsun (iç içe `<Text onPress>`), seçilen kelime vurgulansın
+- [x] Eski telefonda dokunma gecikmesini üretim modunda ölç (`npx expo start --no-dev --minify`), gerekirse hızlandır
+- [ ] Alttan açılan kelime paneli
 - [ ] Son okunan yeri hatırla
 
 _Öğrenilecekler:_ `FlatList`, metni kelimelere bölme (regex), dokunma olayları, stil.
@@ -108,6 +111,8 @@ _Öğrenilecekler:_ algoritma kurma, tarih hesapları, durum yönetimi.
 - [ ] Boş ekranlar ve hata durumları
 - [ ] Kitap sayısını 6–10'a çıkar
 - [ ] Gizlilik politikası sayfası (GitHub Pages yeterli)
+- [ ] Kitap metinlerinin Türkiye'deki telif durumunu kontrol et (Gutenberg sadece ABD için "kamu malı" diyor)
+- [ ] Kullanılan açık kaynak paketlerin lisanslarını Hakkında ekranında listele
 
 ### Faz 6: Yayın
 
@@ -125,6 +130,8 @@ _Öğrenilecekler:_ build, imzalama, mağaza süreci.
 - Kullanıcının kendi `.txt` veya `.epub` dosyasını eklemesi
 - Gutenberg'den kitap indirme
 - AI ile cümle çevirisi (ücretli olabilecek kısım)
+- Kısaltılmış kitaplar: uzun klasiklerin tamamı yerine kısa sürümleri. Piyasadaki graded reader'lar telifli; kaynak olarak telifi bitmiş "çocuklar için yeniden anlatılmış" baskılar, seçilmiş bölümler ya da kendi kısaltmalarımız (AI destekli olabilir)
+- Kitap gibi okuma: ekrana sığmayan metinde sağa kaydırarak ya da düğmeyle sonraki sayfaya geçmek. Metni ekrana göre sayfalara bölmek zor (yazının kapladığı alanı ölçmek gerekiyor); kolay ara yol, bölüm bölüm ilerleme
 - iOS
 
 ## Çalışma şekli

@@ -59,7 +59,7 @@ Her kitabın lisansı eklenmeden önce tek tek kontrol edilir.
 
 _Öğrenilenler:_ dosya tabanlı yönlendirme, layout'lar, dinamik route.
 
-### Faz 1: Kütüphane ve okuyucu
+### Faz 1: Kütüphane ve okuyucu ✅
 
 - [x] `Book` tipi: id, başlık, yazar, seviye, kaynak, lisans, paragraflara bölünmüş bölümler
 - [x] İlk örnek kitap (`fox-and-grapes`)
@@ -68,21 +68,21 @@ _Öğrenilenler:_ dosya tabanlı yönlendirme, layout'lar, dinamik route.
 - [x] Okuyucu: metni paragraf paragraf `FlatList` ile göster
 - [x] Kelimeler dokunulabilir olsun (iç içe `<Text onPress>`), seçilen kelime vurgulansın
 - [x] Eski telefonda dokunma gecikmesini üretim modunda ölç (`npx expo start --no-dev --minify`), gerekirse hızlandır
-- [ ] Alttan açılan kelime paneli
-- [ ] Son okunan yeri hatırla
+- [x] Alttan açılan kelime paneli
+- [x] Son okunan yeri hatırla
 
 _Öğrenilecekler:_ `FlatList`, metni kelimelere bölme (regex), dokunma olayları, stil.
 _Bitti sayılır:_ kitap seçip okuyabiliyorum, dokunduğum kelime panelde görünüyor (çeviri henüz yok).
 
-### Faz 2: İnternetsiz sözlük
+### Faz 2: İnternetsiz sözlük ✅
 
 - [x] Sözlük kaynağını seç ve lisansını doğrula: Türkçe Vikisözlük (İngilizce kelimelerin Türkçe anlamları) + İngilizce Vikisözlük (Türkçe çeviriler ve çekim bilgisi), ikisi de kaikki.org üzerinden, CC BY-SA. Ham veri `data-raw/` klasöründe, git dışında
 - [x] `scripts/build-dictionary.ts`: kitaplardaki kelimeleri toplar, köklerini bulur ("ran" → "run", "children" → "child"), Türkçe anlamlarını çeker ve `src/data/dictionary.json` dosyasını yazar (birkaç yüz KB; telefona sadece bu gider)
 - [x] Akıllı sözlük: çekim bilgisi ("run fiilinin geçmiş zamanı"), özel isim filtresi (küçük harfle geçen kelimede "soyadı" gibi anlamlar gösterilmez), anlamlar türe göre gruplu
-- [ ] Panelde anlam ve kelime türü göster (kod hazır, telefonda denenecek)
-- [ ] `expo-speech` ile telaffuz ekle (kod hazır, telefonda denenecek)
+- [x] Panelde anlam ve kelime türü göster
+- [x] `expo-speech` ile telaffuz ekle
 - [x] Sözlük lisansı: `THIRD-PARTY-NOTICES.md`'de atıf (Hakkında ekranı ayrı madde) (sözlük verisi CC BY-SA kalır, uygulamanın kodu bizim)
-- [ ] Hakkında ekranı: kitap ve sözlük kaynakları (kod hazır, telefonda denenecek)
+- [x] Hakkında ekranı: kitap ve sözlük kaynakları
 
 _Öğrenilecekler:_ Node script yazma, veri işleme, lisanslar.
 _Bitti sayılır:_ örnek kitaplardaki kelimelerin büyük çoğunluğu çevriliyor.
